@@ -1398,6 +1398,8 @@ def _main():
                                  action="store_true",
                                  help="No topic except if explicitly provided")
 
+    parser.add_argument("--labels", nargs="+",
+                        help="Add labels to uploaded patch sets.")
     parser.add_argument("--reviewers", nargs="+",
                         help="Add reviewers to uploaded patch sets.")
     parser.add_argument("-D", "--draft", dest="draft", action="store_true",
@@ -1656,6 +1658,9 @@ def _main():
     if options.reviewers:
         assert_valid_reviewers(options.reviewers)
         push_options += ["r=%s" % r for r in options.reviewers]
+
+    if options.labels:
+        push_options += ["l=%s" % l for l in options.labels]
 
     if options.regenerate:
         print("Amending the commit to regenerate the change id\n")
